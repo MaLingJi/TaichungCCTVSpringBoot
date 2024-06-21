@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CCTV Form</title>
+</head>
+<body>
+    <h1 th:text="${cctv.cctvId == null} ? 'Add CCTV' : 'Edit CCTV'"></h1>
+    <form th:action="@{/cctv}" th:object="${cctv}" method="post">
+        <input type="hidden" th:field="*{cctvId}" />
+        <div>
+            <label>Road Section:</label>
+            <input type="text" th:field="*{roadsection}" />
+        </div>
+        <div>
+            <label>PX:</label>
+            <input type="text" th:field="*{px}" />
+        </div>
+        <div>
+            <label>PY:</label>
+            <input type="text" th:field="*{py}" />
+        </div>
+        <div>
+            <label>URL:</label>
+            <input type="text" th:field="*{cctvUrl}" />
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+    <a href="/cctv">Back to List</a
