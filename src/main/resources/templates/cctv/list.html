@@ -4,36 +4,29 @@
     <title>CCTV List</title>
 </head>
 <body>
-    <h1>CCTV List</h1>
-    <form action="#" th:action="@{/cctv/search}" method="get">
-        <input type="text" name="roadsection" placeholder="Search by Road Section" />
+    <h1>Search CCTVs</h1>
+    <form action="/cctv/search" method="get">
+        <label for="roadsection">Road Section:</label>
+        <input type="text" id="roadsection" name="roadsection">
         <button type="submit">Search</button>
     </form>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Road Section</th>
-                <th>PX</th>
-                <th>PY</th>
-                <th>URL</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="cctv : ${cctvs}">
-                <td th:text="${cctv.cctvId}">CCTV ID</td>
-                <td th:text="${cctv.roadsection}">Road Section</td>
-                <td th:text="${cctv.px}">PX</td>
-                <td th:text="${cctv.py}">PY</td>
-                <td><a th:href="${cctv.cctvUrl}" target="_blank" th:text="${cctv.cctvUrl}">View</a></td>
-                <td>
-                    <a th:href="@{/cctv/edit/{id}(id=${cctv.cctvId})}">Edit</a>
-                    <a th:href="@{/cctv/delete/{id}(id=${cctv.cctvId})}" onclick="return confirm('Are you sure?')">Delete</a>
-                </td>
-            </tr>
-        </tbody>
+    <hr>
+    <h1>List of CCTVs</h1>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Road Section</th>
+            <th>PX</th>
+            <th>PY</th>
+            <th>URL</th>
+        </tr>
+        <tr th:each="cctv : ${cctvs}">
+            <td th:text="${cctv.cctvId}"></td>
+            <td th:text="${cctv.roadsection}"></td>
+            <td th:text="${cctv.px}"></td>
+            <td th:text="${cctv.py}"></td>
+            <td th:text="${cctv.cctvUrl}"></td>
+        </tr>
     </table>
-    <a href="/cctv/add">Add New CCTV</a>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package com.cctv.cctv.controller;
 
 import com.cctv.cctv.entity.CCTV;
-import com.cctv.cctv.repository.CCTVRepository;
+import com.cctv.cctv.service.CCTVService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,18 +20,18 @@ import java.util.List;
 public class CCTVController {
 
     @Autowired
-    private CCTVRepository cctvRepository;
+    private CCTVService cctvService;
 
     @GetMapping
     public String listCCTVs(Model model) {
-        List<CCTV> cctvs = cctvRepository.findAll();
+        List<CCTV> cctvs = cctvService.findAll();
         model.addAttribute("cctvs", cctvs);
         return "cctv/list";
     }
 
     @GetMapping("/search")
     public String searchCCTVs(@RequestParam("roadsection") String roadsection, Model model) {
-        List<CCTV> cctvs = cctvRepository.findByRoadsectionContaining(roadsection);
+        List<CCTV> cctvs = cctvService.searchByRoadsection(roadsection);
         model.addAttribute("cctvs", cctvs);
         return "cctv/list";
     }
@@ -44,32 +44,32 @@ public class CCTVController {
 
     @PostMapping
     public String saveCCTV(@ModelAttribute CCTV cctv) {
-        cctvRepository.save(cctv);
+        cctvService.save(cctv);
         return "redirect:/cctv";
     }
 
     @GetMapping("/edit/{id}")
     public String editCCTVForm(@PathVariable String id, Model model) {
-        CCTV cctv = cctvRepository.findById(id).orElse(null);
+        CCTV cctv = cctvService.findById(id);
         model.addAttribute("cctv", cctv);
         return "cctv/form";
     }
 
     @PostMapping("/update")
     public String updateCCTV(@ModelAttribute CCTV cctv) {
-        cctvRepository.save(cctv);
+        cctvService.save(cctv);
         return "redirect:/cctv";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteCCTV(@PathVariable String id) {
-        cctvRepository.deleteById(id);
+        cctvService.deleteById(id);
         return "redirect:/cctv";
     }
 
     @GetMapping("/view/{id}")
     public String viewCCTV(@PathVariable String id, Model model) {
-        CCTV cctv = cctvRepository.findById(id).orElse(null);
+        CCTV cctv = cctvService.findById(id);
         model.addAttribute("cctv", cctv);
         return "cctv/view";
     }
