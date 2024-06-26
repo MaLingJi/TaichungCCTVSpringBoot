@@ -9,12 +9,7 @@ import com.cctv.cctv.service.CCTVService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,7 +33,7 @@ public class CCTVController {
     @GetMapping("/search")
     public String searchCCTVs(@RequestParam("roadsection") String roadsection, Model model) {
         logger.info("Searching for road section: " + roadsection);
-        List<CCTV> cctvs = cctvService.findByRoadsection(roadsection);
+        List<CCTV> cctvs = cctvService.searchByRoadsection(roadsection);
         logger.info("Found " + cctvs.size() + " CCTVs");
         model.addAttribute("cctvs", cctvs);
         return "cctv/list";
@@ -50,7 +45,7 @@ public class CCTVController {
         return "cctv/form";
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public String saveCCTV(@ModelAttribute CCTV cctv) {
         cctvService.save(cctv);
         return "redirect:/cctv";
@@ -69,7 +64,7 @@ public class CCTVController {
         return "redirect:/cctv";
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteCCTV(@PathVariable String id) {
         cctvService.deleteById(id);
         return "redirect:/cctv";
@@ -81,5 +76,17 @@ public class CCTVController {
         logger.info("Viewing CCTV with ID: " + id);
         model.addAttribute("cctv", cctv);
         return "cctv/view";
+    }
+
+    @GetMapping("/create")
+    public String createCCTVForm(Model model) {
+        model.addAttribute("cctv", new CCTV());
+        return "cctv/create";
+    }
+
+    @PostMapping("/create")
+    public String createCCTV(@ModelAttribute CCTV cctv) {
+        cctvService.save(cctv);
+        return "redirect:/cctv";
     }
 }

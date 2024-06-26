@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 @Table(name = "CCTV_List")
 public class CCTV {
     @Id
-    @Column(name = "cctv_id")
+    @Column(name = "cctvId")
     private String cctvId;
 
     @Column(name = "roadsection")

@@ -10,6 +10,8 @@
         <input type="text" id="roadsection" name="roadsection">
         <button type="submit">Search</button>
     </form>
+    <br>
+    <a href="/cctv/create"><button>Create New CCTV</button></a>
     <hr>
     <h1>List of CCTVs</h1>
     <table border="1">
@@ -19,13 +21,20 @@
             <th>PX</th>
             <th>PY</th>
             <th>URL</th>
+            <th>Actions</th>
         </tr>
         <tr th:each="cctv : ${cctvs}">
             <td th:text="${cctv.cctvId}"></td>
             <td th:text="${cctv.roadsection}"></td>
             <td th:text="${cctv.px}"></td>
             <td th:text="${cctv.py}"></td>
-            <td th:text="${cctv.cctvUrl}"></td>
+            <td><a th:href="${cctv.cctvUrl}" th:text="${cctv.cctvUrl}" target="_blank"></a></td>
+            <td>
+                <a th:href="@{/cctv/edit/{id}(id=${cctv.cctvId})}">Edit</a>
+                <form th:action="@{/cctv/delete/{id}(id=${cctv.cctvId})}" method="post" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr>
     </table>
 </body>

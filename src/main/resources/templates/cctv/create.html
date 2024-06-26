@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Edit CCTV</title>
+    <title>Create New CCTV</title>
 </head>
 <body>
-    <h1>Edit CCTV</h1>
-    <form th:action="@{/cctv/save}" th:object="${cctv}" method="post">
-        <input type="hidden" th:field="*{cctvId}" />
+    <h1>Create New CCTV</h1>
+    <form th:action="@{/cctv/create}" th:object="${cctv}" method="post">
+        <label for="cctvId">CCTV ID:</label>
+        <input type="text" id="cctvId" th:field="*{cctvId}" />
+        <br/>
         <label for="roadsection">Road Section:</label>
         <input type="text" id="roadsection" th:field="*{roadsection}" />
         <br/>
@@ -19,7 +21,7 @@
         <label for="cctvUrl">URL:</label>
         <input type="text" id="cctvUrl" th:field="*{cctvUrl}" />
         <br/>
-        <button type="submit">Save</button>
+        <button type="submit">Create</button>
     </form>
     <a href="/cctv">Back to list</a>
 </body>

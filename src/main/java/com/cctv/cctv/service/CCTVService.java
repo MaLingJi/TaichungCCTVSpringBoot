@@ -26,14 +26,10 @@ public class CCTVService {
     }
 
     public List<CCTV> searchByRoadsection(String roadsection) {
-        return cctvRepository.findByRoadsectionContaining(roadsection.toLowerCase());
+        return cctvRepository.findByRoadsectionContaining(roadsection);
     }
 
     public CCTV findById(String id) {
         return cctvRepository.findById(id).orElse(null);
-    }
-
-    public List<CCTV> findByRoadsection(String roadsection) {
-        return cctvRepository.findByRoadsectionContaining(roadsection);
     }
 }
