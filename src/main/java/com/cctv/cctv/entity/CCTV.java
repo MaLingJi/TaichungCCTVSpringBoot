@@ -1,19 +1,31 @@
 package com.cctv.cctv.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "CCTV_List")
 public class CCTV {
     @Id
+    @Column(name = "cctv_id")
     private String cctvId;
+
+    @Column(name = "roadsection")
     private String roadsection;
+
+    @Column(name = "px")
     private Double px;
+
+    @Column(name = "py")
     private Double py;
+
+    @Column(name = "cctvUrl")
     private String cctvUrl;
 
     // Getters and Setters
-
+    
     public String getCctvId() {
         return cctvId;
     }

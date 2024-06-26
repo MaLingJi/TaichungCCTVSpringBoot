@@ -9,7 +9,4 @@ import java.util.List;
 @Repository
 public interface CCTVRepository extends JpaRepository<CCTV, String> {
     List<CCTV> findByRoadsectionContaining(String roadsection);
-    // List<CCTV> findAll();
-    // CCTV save(CCTV cctv);
-    // void deleteById(String id);
 }

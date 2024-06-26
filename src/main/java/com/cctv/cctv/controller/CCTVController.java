@@ -1,5 +1,8 @@
 package com.cctv.cctv.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cctv.cctv.entity.CCTV;
 import com.cctv.cctv.service.CCTVService;
 
@@ -19,19 +22,24 @@ import java.util.List;
 @RequestMapping("/cctv")
 public class CCTVController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CCTVController.class);
+
     @Autowired
     private CCTVService cctvService;
 
     @GetMapping
     public String listCCTVs(Model model) {
         List<CCTV> cctvs = cctvService.findAll();
+        logger.info("Found " + cctvs.size() + " CCTVs");
         model.addAttribute("cctvs", cctvs);
         return "cctv/list";
     }
 
     @GetMapping("/search")
     public String searchCCTVs(@RequestParam("roadsection") String roadsection, Model model) {
-        List<CCTV> cctvs = cctvService.searchByRoadsection(roadsection);
+        logger.info("Searching for road section: " + roadsection);
+        List<CCTV> cctvs = cctvService.findByRoadsection(roadsection);
+        logger.info("Found " + cctvs.size() + " CCTVs");
         model.addAttribute("cctvs", cctvs);
         return "cctv/list";
     }
@@ -70,6 +78,7 @@ public class CCTVController {
     @GetMapping("/view/{id}")
     public String viewCCTV(@PathVariable String id, Model model) {
         CCTV cctv = cctvService.findById(id);
+        logger.info("Viewing CCTV with ID: " + id);
         model.addAttribute("cctv", cctv);
         return "cctv/view";
     }

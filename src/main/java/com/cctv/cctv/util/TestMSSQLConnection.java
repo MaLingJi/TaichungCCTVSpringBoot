@@ -8,7 +8,7 @@ public class TestMSSQLConnection {
     public static void main(String[] args) {
         String url = "jdbc:sqlserver://localhost:1433;databaseName=TaichungCCTV;encrypt=true;trustServerCertificate=true";
         String user = "sa";
-        String password = "Passw0rd";
+        String password = "Brent871013.";
 
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             if (connection != null) {
