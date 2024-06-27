@@ -10,10 +10,15 @@
         <input type="text" id="roadsection" name="roadsection">
         <button type="submit">Search</button>
     </form>
-    <br>
-    <a href="/cctv/create"><button>Create New CCTV</button></a>
     <hr>
     <h1>List of CCTVs</h1>
+    <div>
+        <a href="/cctv/add"><button type="button">Create new CCTV</button></a>
+        <form action="/logout" method="post" style="display: inline;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <button type="submit">Logout</button>
+        </form>
+    </div>
     <table border="1">
         <tr>
             <th>ID</th>
@@ -28,10 +33,12 @@
             <td th:text="${cctv.roadsection}"></td>
             <td th:text="${cctv.px}"></td>
             <td th:text="${cctv.py}"></td>
-            <td><a th:href="${cctv.cctvUrl}" th:text="${cctv.cctvUrl}" target="_blank"></a></td>
+            <td><a th:href="${cctv.cctvUrl}" target="_blank" th:text="${cctv.cctvUrl}"></a></td>
             <td>
                 <a th:href="@{/cctv/edit/{id}(id=${cctv.cctvId})}">Edit</a>
                 <form th:action="@{/cctv/delete/{id}(id=${cctv.cctvId})}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                     <button type="submit">Delete</button>
                 </form>
             </td>

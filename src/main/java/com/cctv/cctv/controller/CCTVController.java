@@ -42,7 +42,7 @@ public class CCTVController {
     @GetMapping("/add")
     public String addCCTVForm(Model model) {
         model.addAttribute("cctv", new CCTV());
-        return "cctv/form";
+        return "cctv/create";
     }
 
     @PostMapping("/save")
@@ -64,7 +64,7 @@ public class CCTVController {
         return "redirect:/cctv";
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteCCTV(@PathVariable String id) {
         cctvService.deleteById(id);
         return "redirect:/cctv";
