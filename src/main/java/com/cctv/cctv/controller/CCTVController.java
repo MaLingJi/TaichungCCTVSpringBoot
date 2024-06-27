@@ -54,6 +54,10 @@ public class CCTVController {
     @GetMapping("/edit/{id}")
     public String editCCTVForm(@PathVariable String id, Model model) {
         CCTV cctv = cctvService.findById(id);
+        if (cctv == null) {
+            model.addAttribute("error", "CCTV not found");
+            return "error"; // 返回錯誤頁面，確保你有這個模板
+        }
         model.addAttribute("cctv", cctv);
         return "cctv/form";
     }
@@ -70,13 +74,13 @@ public class CCTVController {
         return "redirect:/cctv";
     }
 
-    @GetMapping("/view/{id}")
-    public String viewCCTV(@PathVariable String id, Model model) {
-        CCTV cctv = cctvService.findById(id);
-        logger.info("Viewing CCTV with ID: " + id);
-        model.addAttribute("cctv", cctv);
-        return "cctv/view";
-    }
+    // @GetMapping("/view/{id}")
+    // public String viewCCTV(@PathVariable String id, Model model) {
+    //     CCTV cctv = cctvService.findById(id);
+    //     logger.info("Viewing CCTV with ID: " + id);
+    //     model.addAttribute("cctv", cctv);
+    //     return "cctv/view";
+    // }
 
     @GetMapping("/create")
     public String createCCTVForm(Model model) {

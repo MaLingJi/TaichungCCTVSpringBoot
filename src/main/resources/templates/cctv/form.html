@@ -2,25 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit CCTV</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Edit CCTV</h1>
-    <form th:action="@{/cctv/save}" th:object="${cctv}" method="post">
-        <input type="hidden" th:field="*{cctvId}" />
-        <label for="roadsection">Road Section:</label>
-        <input type="text" id="roadsection" th:field="*{roadsection}" />
-        <br/>
-        <label for="px">PX:</label>
-        <input type="text" id="px" th:field="*{px}" />
-        <br/>
-        <label for="py">PY:</label>
-        <input type="text" id="py" th:field="*{py}" />
-        <br/>
-        <label for="cctvUrl">URL:</label>
-        <input type="text" id="cctvUrl" th:field="*{cctvUrl}" />
-        <br/>
-        <button type="submit">Save</button>
-    </form>
-    <a href="/cctv">Back to list</a>
+    <div class="container">
+        <h1 class="my-4">Edit CCTV</h1>
+        <form th:action="@{/cctv/save}" th:object="${cctv}" method="post">
+            <input type="hidden" th:field="*{cctvId}" />
+            <div class="form-group">
+                <label for="roadsection">Road Section:</label>
+                <input type="text" id="roadsection" th:field="*{roadsection}" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="px">PX:</label>
+                <input type="text" id="px" th:field="*{px}" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="py">PY:</label>
+                <input type="text" id="py" th:field="*{py}" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="cctvUrl">URL:</label>
+                <input type="text" id="cctvUrl" th:field="*{cctvUrl}" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+        <a href="/cctv" class="btn btn-secondary mt-2">Back to list</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap
 </body>
 </html>

@@ -2,46 +2,58 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>CCTV List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Search CCTVs</h1>
-    <form action="/cctv/search" method="get">
-        <label for="roadsection">Road Section:</label>
-        <input type="text" id="roadsection" name="roadsection">
-        <button type="submit">Search</button>
-    </form>
-    <hr>
-    <h1>List of CCTVs</h1>
-    <div>
-        <a href="/cctv/add"><button type="button">Create new CCTV</button></a>
-        <form action="/logout" method="post" style="display: inline;">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-            <button type="submit">Logout</button>
+    <div class="container">
+        <h1 class="my-4">Search CCTVs</h1>
+        <form action="/cctv/search" method="get" class="form-inline mb-4">
+            <div class="form-group mr-2">
+                <label for="roadsection" class="sr-only">Road Section:</label>
+                <input type="text" id="roadsection" name="roadsection" class="form-control" placeholder="Road Section">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
         </form>
+        <hr>
+        <h1 class="my-4">List of CCTVs</h1>
+        <div class="mb-4">
+            <a href="/cctv/add" class="btn btn-success">Create new CCTV</a>
+            <form action="/logout" method="post" style="display: inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Road Section</th>
+                    <th>PX</th>
+                    <th>PY</th>
+                    <th>URL</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cctv : ${cctvs}">
+                    <td th:text="${cctv.cctvId}"></td>
+                    <td th:text="${cctv.roadsection}"></td>
+                    <td th:text="${cctv.px}"></td>
+                    <td th:text="${cctv.py}"></td>
+                    <td><a th:href="${cctv.cctvUrl}" target="_blank" th:text="${cctv.cctvUrl}"></a></td>
+                    <td>
+                        <a th:href="@{/cctv/edit/{id}(id=${cctv.cctvId})}" class="btn btn-warning btn-sm">Edit</a>
+                        <form th:action="@{/cctv/delete/{id}(id=${cctv.cctvId})}" method="post" style="display:inline;">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Road Section</th>
-            <th>PX</th>
-            <th>PY</th>
-            <th>URL</th>
-            <th>Actions</th>
-        </tr>
-        <tr th:each="cctv : ${cctvs}">
-            <td th:text="${cctv.cctvId}"></td>
-            <td th:text="${cctv.roadsection}"></td>
-            <td th:text="${cctv.px}"></td>
-            <td th:text="${cctv.py}"></td>
-            <td><a th:href="${cctv.cctvUrl}" target="_blank" th:text="${cctv.cctvUrl}"></a></td>
-            <td>
-                <a th:href="@{/cctv/edit/{id}(id=${cctv.cctvId})}">Edit</a>
-                <form th:action="@{/cctv/delete/{id}(id=${cctv.cctvId})}" method="post" style="display:inline;">
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-    </table>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
