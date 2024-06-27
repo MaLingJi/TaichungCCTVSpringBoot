@@ -64,7 +64,7 @@ public class CCTVController {
         return "redirect:/cctv";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteCCTV(@PathVariable String id) {
         cctvService.deleteById(id);
         return "redirect:/cctv";
