@@ -1,27 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <title>Register</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  </head>
+  <body>
     <div class="container">
-        <h1 class="my-4">Register</h1>
-        <form th:action="@{/register}" th:object="${user}" method="post">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" th:field="*{username}" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" th:field="*{password}" class="form-control" required />
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
-        <a href="/login" class="mt-2 d-block">Already have an account? Login</a>
+      <h1 class="my-4">Register</h1>
+      <form th:action="@{/register}" th:object="${user}" method="post">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            th:field="*{username}"
+            class="form-control"
+            required
+          />
+          <span id="result"></span>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            th:field="*{password}"
+            class="form-control"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary" id="send">
+          Register
+        </button>
+      </form>
+      <a href="/login" class="mt-2 d-block">Already have an account? Login</a>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <script>
+      // 當輸入完username時，判斷有沒有被用過
+      $(function () {
+        $("#username").change(function () {
+          var username = $("#username").val();
+          console.log("username : " + username);
+
+          if ($.trim(username) == "") {
+            alert("帳號不得為空");
+            return;
+          }
+          var params = { username: "" + username };
+
+          $.ajax({
+            type: "post",
+            url: "/checkNameUsed",
+            contentType: "application/json",
+            data: JSON.stringify(params),
+            success: function (data) {
+              console.log(data);
+              if (data == "Y") {
+                $("#result").html("帳號已使用");
+                //按鈕失效
+                $("#send").attr("disabled", true);
+              }
+              if (data == "N") {
+                $("#result").html("帳號未使用");
+                //按鈕恢復
+                $("#send").attr("disabled", false);
+              }
+            },
+            error: function (e) {
+              console.log(e);
+            },
+          });
+        });
+      });
+    </script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</body>
+  </body>
 </html>

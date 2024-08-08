@@ -14,4 +14,14 @@ public class UserService {
     public void save(User user) {
         userRepository.save(user);
     }
+
+    // 檢查username是否已被使用
+    public boolean checkUser(User user) {
+        User uBean = userRepository.findByUsername(user.getUsername());
+
+        if (uBean != null) {
+            return true;
+        }
+        return false;
+    }
 }
