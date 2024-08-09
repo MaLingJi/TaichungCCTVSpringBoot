@@ -7,6 +7,8 @@
       rel="stylesheet"
     />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
   </head>
   <body>
     <div class="container">
@@ -43,6 +45,8 @@
     <script>
       // 當輸入完username時，判斷有沒有被用過
       $(function () {
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
         $("#username").change(function () {
           var username = $("#username").val();
           console.log("username : " + username);
@@ -58,8 +62,11 @@
             url: "/checkNameUsed",
             contentType: "application/json",
             data: JSON.stringify(params),
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader(csrfHeader, csrfToken); // 设置 CSRF 头
+            },
             success: function (data) {
-              console.log(data);
+              console.log("data",data);
               if (data == "Y") {
                 $("#result").html("帳號已使用");
                 //按鈕失效
